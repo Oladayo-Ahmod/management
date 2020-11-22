@@ -1,4 +1,8 @@
-<?php session_start();?>
+<?php
+// starting session
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +30,6 @@
                                 include 'modal/modal.php';
                                 $modal = new Modal;
                                 $modal->login();
-                                
                             ?>
                         <!-- error or success message ends -->
                         <form action="#" class="form-group p-2" method="POST">
