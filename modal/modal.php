@@ -36,6 +36,7 @@
 						if ($fetch['password'] == md5(md5($fetch['id']).$password)) {
 							//setting the session id
 							$_SESSION['id'] = $fetch['id'];
+							// setting session username
 							$_SESSION['username'] = $fetch['fullname'];
 							//redirect to the dashboard if the passwords match
 							header('location:admin/dashboard.php');
