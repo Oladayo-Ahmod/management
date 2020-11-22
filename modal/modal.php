@@ -20,7 +20,8 @@
 			// header('Cache-Control:no cache');// no cache
 			// session_cache_limiter('private_no_expire');
 			//starting the session variable
-			
+			// disabling error report
+			error_reporting(0);
 			if (isset($_POST['login'])) {
 				$error = "";
 				$email = strip_tags($_POST['email']);
@@ -56,6 +57,8 @@
 
 		//creating total monthly expenditure method
         public function weekly_exp(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM expenditure WHERE WEEK(itemdate) = WEEK(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -71,6 +74,8 @@
 
         //creating dashboard total monthly expenditure method
         public function monthly_exp(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM expenditure WHERE MONTH(itemdate) = MONTH(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -86,6 +91,8 @@
 
 		//creating total monthly expenditure method
         public function yearly_exp(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM expenditure WHERE YEAR(itemdate) = YEAR(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -101,6 +108,8 @@
 
 		//creating dashboard total weekly income method
         public function weekly_inc(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM income WHERE WEEK(itemdate) = WEEK(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -116,6 +125,8 @@
 
 		//creating dashboard total monthly income method
         public function monthly_inc(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM income WHERE MONTH(itemdate) = MONTH(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -131,6 +142,8 @@
 
 		//creating dashboard total YEARly income method
         public function yearly_inc(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM income WHERE YEAR(itemdate) = YEAR(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -146,6 +159,8 @@
 
 		// creating total weekly receipt method
         public function weekly_rec(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM receipt WHERE WEEK(itemdate) = WEEK(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -161,6 +176,8 @@
 
 		//creating dashboard total monthly receipt method
         public function monthly_rec(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM receipt WHERE MONTH(itemdate) = MONTH(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -176,6 +193,8 @@
 
 		//creating dashboard total yearly receipt method
         public function yearly_rec(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM receipt WHERE YEAR(itemdate) = YEAR(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -191,6 +210,8 @@
 
 		//creating total weekly payment method
         public function weekly_pay(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM payment WHERE WEEK(itemdate) = WEEK(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -206,6 +227,8 @@
 
 		//creating dashboard total monthly payment method
         public function monthly_pay(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM payment WHERE MONTH(itemdate) = MONTH(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -221,6 +244,8 @@
 
 		//creating dashboard total yearly payment method
         public function yearly_pay(){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM payment WHERE YEAR(itemdate) = YEAR(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -236,6 +261,8 @@
 
 		// creating dashboard last 7 days details
 		public function sevenDays_exp(){// last seven days expenditure
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT * FROM expenditure WHERE itemdate > now() - INTERVAL 7 day";
 				 $stmt = $this->conn->prepare($query);
@@ -252,6 +279,8 @@
 		}
 
 		public function sevenDays_inc(){// last seven days income
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			$query = "SELECT * FROM income WHERE itemdate > now() - INTERVAL 7 day";
 				 $stmt = $this->conn->prepare($query);
@@ -267,7 +296,9 @@
 
 		}
 		//creating payment method
-		public function payment(){		
+		public function payment(){
+			// disabling error report
+			error_reporting(0);		
 			if (isset($_POST['payment'])) {
 				$error = '';
 				$name = strip_tags($_POST['name']);
@@ -302,6 +333,8 @@
 
 		//creating receipt method
 		public function receipt(){
+			// disabling error report
+			error_reporting(0);
 			if (isset($_POST['receipt'])) {
 				$error = '';
 				$name = strip_tags($_POST['name']);
@@ -337,6 +370,8 @@
 
 		//creating expenditure method
 		public function expenditure(){
+			// disabling error report
+			error_reporting(0);
 			if (isset($_POST['expenditure'])) {
 				$error = '';
 				$name = strip_tags($_POST['name']);
@@ -361,6 +396,8 @@
 
 		// creating expenditure management method
 		public function manageExp($start,$rpp,$page,$previous,$next){
+			// disabling error report
+			error_reporting(0);
 			$error = '';
 			$data = null;
 			
@@ -389,6 +426,8 @@
 
 		//creating edit method
 		public function edit($id){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			//check if the get variable is expenditure
 			if (isset($_GET['expid'])) {
@@ -420,6 +459,8 @@
 
 		//creating update method
 		public function update($id,$name,$amount,$date,$description,$place,$category){
+			// disabling error report
+			error_reporting(0);
 			$error = '';
 			//check if the post variable is expenditure
 			if (isset($_POST['updateexp'])) {
@@ -451,6 +492,8 @@
 
 		//creating income method
 		public function income(){
+			// disabling error report
+			error_reporting(0);
 			if (isset($_POST['income'])) {
 				$error = '';
 				$name = strip_tags($_POST['name']);
@@ -475,6 +518,8 @@
 
 		//creating the income management method
 		public function manageInc($start,$rpp,$page,$previous,$next){
+			// disabling error report
+			error_reporting(0);
 			$error = '';
 			$data = null;
 			//count the total number of id in the database
@@ -503,6 +548,8 @@
 
 		// creating category method
 		public function category(){
+			// disabling error report
+			error_reporting(0);
 			$error = '';
 			//check if the expenditure category is set
 			if (isset($_POST['catexp'])) {
@@ -540,8 +587,8 @@
 
 		// creating fetch method for category
 		public function fetch_cat($type){
-			//disabling error reporting
-			//error_reporting(0);
+			//disabling error report
+			error_reporting(0);
 			// fetching all the categories in the table
 			$data = null;
 			$query = "SELECT * FROM category WHERE category_type='$type' ";
@@ -560,6 +607,8 @@
 
 		// creating edit method for category
 		public function edit_cat($id){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			//check if the get variable is expenditure category
 			if (isset($_GET['ecid'])) {
@@ -591,6 +640,8 @@
 
 		//creating category update method
 		public function cat_update($id,$name,$type){
+			// disabling error report
+			error_reporting(0);
 			$error = '';
 			//check if the expenditure category update is set
 			if (isset($_POST['ecUpdate'])) {
@@ -622,6 +673,8 @@
 
 		//creating delete  method
 		public function delete($id,$type){
+			// disabling error report
+			error_reporting(0);
 			$error = '';
 			//deleting income and  expenditures
         	    //check if expenditure id is set
@@ -709,6 +762,8 @@
 		}
 		//creating reports of expenditure and income method
 		public function report(){
+			// disabling error report
+			error_reporting(0);
 			#error_reporting(0);
 			$data = null;
 			//weekly report of expenditure
@@ -801,6 +856,7 @@
 
 		// creating total of the weekly,monthly and yearly reports of expenditure and income method
 		public function total_report(){
+			// disabling error report
 			error_reporting(0);
 			$data = null;
 			//total weekly report of expenditure
@@ -882,6 +938,8 @@
 
 		// creating custom search of expenditure and income method
 		public function custom_search($from,$to){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			//searching expenditure
 			if (isset($_POST['searchexp'])) {
@@ -918,6 +976,8 @@
 		}
 		//creating custom search total of income and expenditure method
 		public function total($from,$to){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			// getting the total of searched expenditure
 			if (isset($_POST['searchexp'])) {
@@ -944,6 +1004,8 @@
 		}
 		//creating budget method
 		public function budget(){
+			// disabling error report
+			error_reporting(0);
 			$error = '';
 			//inserting expenditure budget
 			if (isset($_POST['budgetexp'])) {
@@ -987,8 +1049,8 @@
 		
 		// creating fetch method for budget
 		public function fetch_bud($type){
-			//disabling error reporting
-			//error_reporting(0);
+			//disabling error report
+			error_reporting(0);
 			// fetching all the  budget
 			$data = null;
 			$query = "SELECT * FROM budgets WHERE budget_type='$type' ";
@@ -1007,6 +1069,8 @@
 
 		// creating edit method for category
 		public function edit_bud($id){
+			// disabling error report
+			error_reporting(0);
 			$data = null;
 			//check if the get variable is expenditure category
 			if (isset($_GET['ebid'])) {
@@ -1038,6 +1102,8 @@
 
 		//creating budget update method
 		public function bud_update($id){
+			// disabling error report
+			error_reporting(0);
 			$error = '';
 			//check if the expenditure budget update is set
 			if (isset($_POST['ebUpdate'])) {
