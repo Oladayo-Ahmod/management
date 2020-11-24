@@ -35,6 +35,21 @@
                 <h6 class="list-group-item active"><i class="fa fa-minus mr-1"></i>/ Manage Expenses</h6>
             </div>
             <div class="card-body">
+
+                                            <!--  search bar -->
+                                                <div class="col-md-4 ml-auto">
+                                                    <form action="#" method="POST" class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" name="search" type="search" placeholder="search...">
+                                                            <span class="input-group-append">
+                                                                <button name="searchExp" class="btn btn-primary" type="submit">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
                                                 <!--pagination for the table-->
 												<nav arial-black="Page navigation example text-center">
 													<ul class="pagination justify-content-center">
@@ -54,16 +69,22 @@
                                                             $start = ($page * $rpp) - $rpp;
                                                         }
                                                         else {
-                                                            $start = 1;
+                                                            $start = 0;
                                                         }
                                                         //previous button for the pagination
                                                         $previous = $page - 1;
                                                         //next button for the pagination
-                                                        $next = $page + 1; 
-                                                        $modal = new Modal;
-                                                        $row =  $modal->manageExp($start,$rpp,$page,$previous,$next);
-                                                        $total_pages = $row['total'];
-
+                                                        $next = $page + 1;
+                                                        if (isset($_POST['searchExp'])) {
+                                                            $modal = new Modal;
+                                                            $search = strip_tags($_POST['search']);
+                                                            $row = $modal->manageExp($start,$rpp,$page,$previous,$next); 
+                                                            $total_pages = $row['total'];
+                                                        }
+                                                        else{
+                                                            $row =  $modal->manageExp($start,$rpp,$page,$previous,$next);
+                                                            $total_pages = $row['total'];
+                                                        }
                                                         ?>
 														<li class="page-item"><a href="manageexp.php?page=<?= $previous;?>" class="page-link">previous</a></li>
 														<?php 
@@ -74,6 +95,8 @@
 														<li class="page-item"><a href="manageexp.php?page=<?= $next;?>" class="page-link">Next</a></li>
 													</ul>
 												</nav>
+                                               
+                                                
                     <div class="table-responsive">
                         <table class="table  table-responsive table-bordered table-hover">
                             <thead>
@@ -90,13 +113,27 @@
                             </thead>
                             <tbody>
                                 <?php 
-                                $modal = new Modal;
-                                $row =  $modal->manageExp($start,$rpp,$page,$previous,$next);
-                                   $count = 1;
+                                if (isset($_POST['searchExp'])) {
+                                    $modal = new Modal;
+                                    // $search = strip_tags($_POST['search']);
+                                    $row = $modal->manageExp($start,$rpp,$page,$previous,$next); 
+                                    // $total_pages = $row['total'];
+                                }
+                                else{
+                                    $modal = new Modal;
+                                    $row =  $modal->manageExp($start,$rpp,$page,$previous,$next);
+                                    // $total_pages = $row['total'];
+                                }
+                                // $modal = new Modal;
+                                // $row =  $modal->manageExp($start,$rpp,$page,$previous,$next);
+                                  
                                     if (!empty($row)) {
-                                        foreach($row as $rows){?>
+                                        $count = 1;
+                                        foreach($row as $rows){
+                                           
+                                            ?>
                                             <tr>
-                                                <td><?= $count++ ; ?></td>
+                                                <td><?= $count++; ?></td>
                                                 <td><?= $rows['item']; ?></td>
                                                 <td><?= $rows['cost']; ?></td>
                                                 <td><?= $rows['itemdate']; ?></td>

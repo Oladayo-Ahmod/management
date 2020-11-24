@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | Expenditure Management</title>
+    <title>Admin | Income Management</title>
      <!-- css file -->
      <link rel="stylesheet" href="../css/style.css">
     <!-- css libraries -->
@@ -35,6 +35,20 @@
                 <h6 class="list-group-item active"><i class="fa fa-minus mr-1"></i>/ Manage Income</h6>
             </div>
             <div class="card-body">
+             <!--  search bar -->
+             <div class="col-md-4 ml-auto">
+                                                    <form action="#" method="POST" class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" name="search" type="search" placeholder="search...">
+                                                            <span class="input-group-append">
+                                                                <button name="searchInc" class="btn btn-primary" type="submit">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
                 <!--pagination for the table-->
                         <nav arial-black="Page navigation example text-center">
                             <ul class="pagination justify-content-center">
@@ -91,7 +105,17 @@
                             </thead>
                             <tbody>
                                 <?php 
-                            
+                                     if (isset($_POST['searchInc'])) {
+                                        $modal = new Modal;
+                                        // $search = strip_tags($_POST['search']);
+                                        $row = $modal->manageInc($start,$rpp,$page,$previous,$next); 
+                                        // $total_pages = $row['total'];
+                                    }
+                                    else{
+                                        $modal = new Modal;
+                                        $row =  $modal->manageInc($start,$rpp,$page,$previous,$next);
+                                        // $total_pages = $row['total'];
+                                    }
                                     if (!empty($row)) {
                                    
                                         foreach($row as $rows){?>

@@ -402,27 +402,60 @@
 			error_reporting(0);
 			$error = '';
 			$data = null;
-			
-			//count the total number of id in the database
-			$count = "SELECT COUNT(id) AS id FROM expenditure";
-			$query_count = $this->conn->query($count);
-			$result_count = mysqli_fetch_array($query_count);
-			//getting the number of pages
-			$total_pages  = intval($result_count['id']) / $rpp;
-			$data['total'] = $total_pages;
-			$query = "SELECT * FROM expenditure WHERE item IS NOT NULL ORDER BY itemdate LIMIT $start,$rpp";
-			$stmt = $this->conn->prepare($query);
-			$stmt->execute();
-			$result = $stmt->get_result();
-			if(mysqli_num_rows($result) > 0){
-				while($fetch = $result->fetch_assoc()){
-					$data[] = $fetch;
-				} 
-				return $data;
+			if (!isset($_POST['searchExp'])) {
+				//count the total number of id in the database
+				$count = "SELECT COUNT(id) AS id FROM expenditure";
+				$query_count = $this->conn->query($count);
+				$result_count = mysqli_fetch_array($query_count);
+				//getting the number of pages
+				$total_pages  = intval($result_count['id']) / $rpp;
+				$data['total'] = $total_pages;
+				$query = "SELECT * FROM expenditure WHERE item IS NOT NULL ORDER BY itemdate LIMIT $start,$rpp";
+				$stmt = $this->conn->prepare($query);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				if(mysqli_num_rows($result) > 0){
+					while($fetch = $result->fetch_assoc()){
+						$data[] = $fetch;
+					} 
+					
+				}
+				else {
+					$error = '<div class="alert alert-danger">Error fetching data try later!</div>';
+				}
 			}
-			else {
-				$error = '<div class="alert alert-danger">Error fetching data try later!</div>';
+			// if search button is set
+			if (isset($_POST['searchExp'])) {
+				$search = strip_tags($_POST['search']);
+				//count the total number of id in the database
+				$count = "SELECT COUNT(id) AS id FROM expenditure";
+				$query_count = $this->conn->query($count);
+				$result_count = mysqli_fetch_array($query_count);
+				//getting the number of pages
+				$total_pages  = intval($result_count['id']) / $rpp;
+				$data['total'] = $total_pages;
+				$query = "SELECT * FROM expenditure WHERE
+				 category REGEXP '^[$search]'
+				 OR item REGEXP '^[$search]'
+				 OR place REGEXP '^[$search]'
+				 ORDER BY item
+				  LIMIT $start,$rpp";
+				$stmt = $this->conn->prepare($query);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				if(mysqli_num_rows($result) > 0){
+					while($fetch = $result->fetch_assoc()){
+						$data[] = $fetch;
+					
+					} 
+					
+				}
+				else {
+					$error = '<div class="alert alert-danger">Error fetching data try later!</div>';
+				}
+						
 			}
+			return $data;
 			echo $error;
 		}
 
@@ -524,27 +557,60 @@
 			error_reporting(0);
 			$error = '';
 			$data = null;
-			//count the total number of id in the database
-			$count = "SELECT COUNT(id) AS id FROM expenditure";
-			$query_count = $this->conn->query($count);
-			$result_count = mysqli_fetch_array($query_count);
-			//getting the number of pages
-			$total_pages  = intval($result_count['id']) / $rpp;
-			$data['total'] = $total_pages;
-			$query = "SELECT * FROM income ORDER BY itemdate LIMIT $start,$rpp";
-			$stmt = $this->conn->prepare($query);
-			$stmt->execute();
-			$result = $stmt->get_result();
-			if(mysqli_num_rows($result) > 0){
-				while($fetch = $result->fetch_assoc()){
-					$data[] = $fetch;
-				} 
-				return $data;
-				
+			if (!isset($_POST['searchInc'])) {
+				//count the total number of id in the database
+				$count = "SELECT COUNT(id) AS id FROM expenditure";
+				$query_count = $this->conn->query($count);
+				$result_count = mysqli_fetch_array($query_count);
+				//getting the number of pages
+				$total_pages  = intval($result_count['id']) / $rpp;
+				$data['total'] = $total_pages;
+				$query = "SELECT * FROM income ORDER BY itemdate LIMIT $start,$rpp";
+				$stmt = $this->conn->prepare($query);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				if(mysqli_num_rows($result) > 0){
+					while($fetch = $result->fetch_assoc()){
+						$data[] = $fetch;
+					}
+					
+				}
+				else {
+					$error = '<div class="alert alert-danger">Error fetching data try later!</div>';
+				}
 			}
-			else {
-				$error = '<div class="alert alert-danger">Error fetching data try later!</div>';
+
+			// if search button is set
+			if (isset($_POST['searchInc'])) {
+				$search = strip_tags($_POST['search']);
+				//count the total number of id in the database
+				$count = "SELECT COUNT(id) AS id FROM income";
+				$query_count = $this->conn->query($count);
+				$result_count = mysqli_fetch_array($query_count);
+				//getting the number of pages
+				$total_pages  = intval($result_count['id']) / $rpp;
+				$data['total'] = $total_pages;
+				$query = "SELECT * FROM income WHERE
+				 category REGEXP '^[$search]'
+				 OR item REGEXP '^[$search]'
+				 ORDER BY item
+				  LIMIT $start,$rpp";
+				$stmt = $this->conn->prepare($query);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				if(mysqli_num_rows($result) > 0){
+					while($fetch = $result->fetch_assoc()){
+						$data[] = $fetch;
+					
+					} 
+					
+				}
+				else {
+					$error = '<div class="alert alert-danger">Error fetching data try later!</div>';
+				}
+						
 			}
+			return $data;
 			echo $error;
 		} 
 
