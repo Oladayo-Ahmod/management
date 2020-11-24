@@ -24,8 +24,7 @@
 
         <!-- including sidebar file -->
         <?php include '../includes/sidebar.php';
-                // including modal
-                include '../modal/modal.php';
+
                 
         ?>
             <!-- Dashboard item -->
@@ -141,6 +140,9 @@
                     <div class="card shadow">
                     <?php 
                        $modal = new Modal;
+                       $id = $_SESSION['id'];
+                       $picture = $modal->fetch_picture($id);
+                       
                        // receipt and payment details
                        $total_rec = $modal->monthly_rec();
                        $total_pay = $modal->monthly_pay();
@@ -171,7 +173,7 @@
             </div><br>
 
             <!-- third row -->
-            <div class="row my-3">
+            <div class="row my-2">
                 <div class="col-md-6">
                    <div class="card shadow">
                        <div class="card-title">

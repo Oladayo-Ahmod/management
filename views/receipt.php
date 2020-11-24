@@ -36,7 +36,7 @@
             </div>
             <div class="card-body">
                     <?php 
-                        include '../modal/modal.php';
+                      
                         $modal = new Modal;
                         $modal->receipt();
                     ?>

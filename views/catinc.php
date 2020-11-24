@@ -42,7 +42,7 @@
                             </div>
                             <thead>
                             <?php 
-                            include '../modal/modal.php';
+                           
                             $modal = new Modal;
                             $modal->category();
                            

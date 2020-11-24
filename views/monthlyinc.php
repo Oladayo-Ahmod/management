@@ -55,7 +55,7 @@
                     </thead>
                     <tbody>
                     <?php
-                        include '../modal/modal.php';
+                        
                         if (isset($_GET['mtinc'])) {
                             $count = 1;
                             $modal = new Modal;

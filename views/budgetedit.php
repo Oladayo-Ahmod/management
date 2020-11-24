@@ -23,7 +23,6 @@
                 <!-- including top bar file -->
             <?php include '../includes/topbar.php';?>
             <?php
-                include '../modal/modal.php';
                 // if the expenditure budget id is set 
                 if (isset($_GET['ebid'])) {
                     // set the html content of the header

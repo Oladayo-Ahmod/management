@@ -5,8 +5,7 @@
         if (strlen($_SESSION['id']) == 0) {
             header('location:../index.php');
         }  
-        // including modal file
-            include '../modal/modal.php';
+       
         //deleting income and  expenditures
             //check if expenditure id is set
             if (isset($_GET['expid'])) {

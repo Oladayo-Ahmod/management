@@ -3,7 +3,16 @@
                     <div class="col-md-3 nav-toggle" id="cols">
                         <div class="card shadow bg-primary text-white p-3">
                             <div class="text-center">
-                                <img src="../images/doctor.jpg" id="img-fluid" class="img-fluid card-img-top" alt="profile image">
+                            <?php
+                                // including modal class
+                                include '../modal/modal.php';
+                                // instantiating modal class
+                                $modal = new Modal;
+                                // setting the id
+                                $id = $_SESSION['id'];
+                                $picture = $modal->fetch_picture($id);
+                       ?>
+                                <img src="<?= $picture['picture']; ?>" id="img-fluid" class="img-fluid card-img-top" alt="profile image">
                             </div>
                             <div class="caption">
                                 <p class="text-center"><i class="fas text-warning fa-user-circle mr-1 text-warning"></i><?= $_SESSION['username']; ?></p>
@@ -73,7 +82,8 @@
                                 </li>
 
                                 <li class="nav-item"><a href="../views/calculator.php" class="nav-link"><i class="fas text-warning fa-calculator mr-1"></i>Calculator</a></li>
-                                <li class="nav-item"><a href="../views/logout.php" class="nav-link"><i class=" text-warning fas fa-sign-out-alt mr-1"></i>Logout</a></li>
+                                <li class="nav-item mt-0"><a href="../views/profile.php" class="nav-link"><i class="fas text-warning fa-user mr-1"></i>Profile</a></li>
+                                <li class="nav-item mt-0"><a href="../views/logout.php" class="nav-link"><i class=" text-warning fas fa-sign-out-alt mr-1"></i>Logout</a></li>
                             </ul>
                         </div>
                     </div>

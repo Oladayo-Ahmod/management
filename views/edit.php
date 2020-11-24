@@ -59,8 +59,7 @@
             <div class="card-body">
                     <?php 
                         
-                        //including the modal file
-                         include '../modal/modal.php';
+                      
 
                          //updating method section
                             //check if the income  update is set

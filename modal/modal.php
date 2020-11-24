@@ -26,7 +26,7 @@
 				$error = "";
 				$email = strip_tags($_POST['email']);
 				$password = strip_tags($_POST['password']);
-				$query = "SELECT * FROM `admin` WHERE email = ? LIMIT 1";
+				$query = "SELECT * FROM `admin_details` WHERE email = ? LIMIT 1";
 				$stmt = $this->conn->prepare($query);
 				$stmt->bind_param('s',$email);
 				if($stmt->execute()){
@@ -37,6 +37,8 @@
 						if ($fetch['password'] == md5(md5($fetch['id']).$password)) {
 							//setting the session id
 							$_SESSION['id'] = $fetch['id'];
+							//setting session picture
+							$_SESSION['picture'] = $fetch['picture'];
 							// setting session username
 							$_SESSION['username'] = $fetch['fullname'];
 							//redirect to the dashboard if the passwords match
@@ -1139,10 +1141,84 @@
 					$error = '<div class="alert alert-success">Budget updated successfully!</div>';
 				}
 				else {
-					$error = '<div class="alert alert-danger">Error updatng budget!</div>';
+					$error = '<div class="alert alert-danger">Error updating budget!</div>';
 				}
 			}
 			echo $error;
+		}
+
+		// admin_details profile method
+		public function profile($id){
+			$data = null;
+			// fetching data from the database
+			$query = "SELECT * FROM `admin_details` WHERE id = ?";
+			$stmt = $this->conn->prepare($query);
+			$stmt->bind_param('i',$id);
+			if($stmt->execute()){
+				$result = $stmt->get_result();
+				while($fetch = $result->fetch_assoc()){
+					$data[] = $fetch;
+				}
+			}
+			return $data;
+			
+		}
+		// admin_details update method
+		public function profile_update($id){
+			// setting error message
+			$error = '';
+			if (isset($_POST['update'])) {
+				$full_name = strip_tags($_POST['fullname']);
+				$email = strip_tags($_POST['email']);
+				$role = strip_tags($_POST['role']);
+				$department = strip_tags($_POST['department']);
+				//updating the data
+				$query = "UPDATE `admin_details` SET fullname = ?, email = ?, `post` = ?, department = ? WHERE id = ? LIMIT 1";
+				$stmt = $this->conn->prepare($query);
+				$stmt->bind_param('ssssi',$full_name,$email,$role,$department,$id);
+				if($stmt->execute()){
+					$error = '<div class="alert alert-success">Profile updated successfully!</div>';
+				}
+				else {
+					$error = '<div class="alert alert-danger">Error updating profile!</div>';
+				}
+			}
+			echo $error;
+		}
+
+		// uploading admin picture
+		public function profile_picture($id,$image_path){
+			//setting error message
+			$error = '';
+			// check if the profile picture is set
+			if (isset($_POST['picture'])) {
+				$query_two = "UPDATE admin_details SET picture =? WHERE id = ? LIMIT 1";
+				$stmt = $this->conn->prepare($query_two);
+				$stmt->bind_param('si',$image_path,$id);
+				if($stmt->execute()){
+					$error = '<div class="alert alert-success">Profile picture updated successfully!</div>';
+				}
+				else {
+					$error = '<div class="alert alert-danger">Error updating profile picture!</div>';
+				}
+			
+			}
+			echo $error;
+		}
+
+		// fetch profile picture path from the database
+		public function fetch_picture($id){
+			$data = null;
+			$query = "SELECT picture FROM admin_details WHERE id = ?";
+			$stmt = $this->conn->prepare($query);
+			$stmt->bind_param('i',$id);
+			if($stmt->execute()){
+				$result = $stmt->get_result();
+				$fetch = $result->fetch_assoc();
+				$data = $fetch;
+			}
+			return $data;
+			
 		}
 
 

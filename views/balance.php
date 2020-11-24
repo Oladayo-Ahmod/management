@@ -43,8 +43,7 @@
                 <div class="col-md-3 my-2">
                    <div class="card shadow bg-primary py-2">
                         <div class="card-title">
-                        <?php 
-                                include '../modal/modal.php';
+                        <?php
                                 $modal = new Modal;
                                 $total_row = $modal->weekly_inc();
                             ?>

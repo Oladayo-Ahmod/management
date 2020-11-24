@@ -39,7 +39,7 @@
                         <nav arial-black="Page navigation example text-center">
                             <ul class="pagination justify-content-center">
                                 <?php
-                                include '../modal/modal.php';
+                              
                                 // setting result per page
                                 $rpp = 10;
                                 //check if the page is set
