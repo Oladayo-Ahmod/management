@@ -27,8 +27,8 @@ category = () =>{
 toggle = () =>{
     document.querySelector('.nav-toggle').classList.toggle('newtoggle-nav')
 }
+
 //  calculator section
-    document.querySelector('#current').innerHTML.toLocaleString('en');
 ac = () =>{
     let output = document.querySelector('#current');
     output.innerHTML = 0;

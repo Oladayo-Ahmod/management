@@ -4,7 +4,7 @@
         private $dbname = 'management';
         private $username = 'root';
         private $password = '';
-        private $conn;
+        public $conn;
         public function __construct(){
            try {
                $this->conn = new mysqli($this->localhost,$this->username,$this->password,$this->dbname);
@@ -37,8 +37,6 @@
 						if ($fetch['password'] == md5(md5($fetch['id']).$password)) {
 							//setting the session id
 							$_SESSION['id'] = $fetch['id'];
-							//setting session picture
-							$_SESSION['picture'] = $fetch['picture'];
 							// setting session username
 							$_SESSION['username'] = $fetch['fullname'];
 							//redirect to the dashboard if the passwords match
@@ -1287,6 +1285,56 @@
 			
 		}
 
+		// password token method
+		public function password_token(){
+			// error message
+			$error = '';
+			$data = null;
+			if (isset($_GET['token'])) {
+				//token id
+				$token = $_GET['token'];
+				$query = "SELECT * FROM password_reset WHERE token = ?";
+				$stmt = $this->conn->prepare($query);
+				$stmt->bind_param('s',$token);
+				if($stmt->execute()){
+					$result = $stmt->get_result();
+					if (mysqli_num_rows($result) > 0) {
+						$fetch = $result->fetch_assoc();
+						$admin_id = $fetch['admin_id'];
+						$data[] = $fetch; 
+					}
+					else{
+						header('location:../index.php');
+					}
+				}
+			}
+			
+			// if password update is set
+			if (isset($_POST['reset_password'])) {
+				$password = strip_tags($_POST['password']);// password
+				$c_password = strip_tags($_POST['c_password']);// confirm password
+				// check if both passwords match
+				if ($password !== $c_password) {
+					$error = '<div class="alert alert-danger">Passwords do not match!</div>';	
+				}
+				else {
+					// update the pasword
+					$new_password = md5(md5($admin_id).$password);
+					$query = "UPDATE admin_details SET `password` = ? WHERE id = ? LIMIT 1";
+					$stmt = $this->conn->prepare($query);
+					$stmt->bind_param('si',$new_password,$admin_id);
+					if($stmt->execute()){
+						$error = '<div class="alert alert-success">Password changed successfully!</div>';
+					}
+					else {
+						$error = '<div class="alert alert-danger">Error updating Password!</div>';
+					}
+				}
+			}
+			echo $error;
+			return $data;
+		}
+		
 
     }
 ?>
