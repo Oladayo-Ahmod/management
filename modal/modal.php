@@ -106,6 +106,50 @@
             
 		}
 
+		// creating dashboard chart for months of the year method
+		public function month_chart(){
+			$data = null;
+			$query = "SELECT date_format(itemdate,'%M') AS month FROM expenditure GROUP BY
+			YEAR(itemdate), MONTH(itemdate) ORDER BY YEAR(itemdate),MONTH(itemdate)";
+			 $stmt = $this->conn->prepare($query);
+			 $stmt->execute();
+			 $result = $stmt->get_result();
+			 while($fetch = $result->fetch_assoc()){
+					 $data[] = $fetch; 		 
+			 }
+			 return $data;
+		}
+
+		// creating dashboard chart for expenditure of the year method
+		public function expenditure_chart(){
+			$data = null;
+			$query = "SELECT SUM(cost) AS costs FROM expenditure GROUP BY
+			YEAR(itemdate), MONTH(itemdate) ORDER BY YEAR(itemdate),MONTH(itemdate)";
+			 $stmt = $this->conn->prepare($query);
+			 $stmt->execute();
+			 $result = $stmt->get_result();
+			 while($fetch = $result->fetch_assoc()){
+				 	$data[] = $fetch;		 		 
+			 }
+			//  print_r($data);
+			 return $data;
+		}
+
+		// creating dashboard chart for income of the year method
+		public function income_chart(){
+			$data = null;
+			$query = "SELECT SUM(cost) AS costs FROM income GROUP BY
+			YEAR(itemdate), MONTH(itemdate) ORDER BY YEAR(itemdate),MONTH(itemdate)";
+			 $stmt = $this->conn->prepare($query);
+			 $stmt->execute();
+			 $result = $stmt->get_result();
+			 while($fetch = $result->fetch_assoc()){
+				 	$data[] = $fetch;		 		 
+			 }
+			//  print_r($data);
+			 return $data;
+		}
+
 		//creating dashboard total weekly income method
         public function weekly_inc(){
 			// disabling error report
@@ -126,7 +170,7 @@
 		//creating dashboard total monthly income method
         public function monthly_inc(){
 			// disabling error report
-			error_reporting(0);
+			#error_reporting(0);
 			$data = null;
 			$query = "SELECT SUM(cost) AS total_report FROM income WHERE MONTH(itemdate) = MONTH(CURRENT_DATE())
 				 AND YEAR(itemdate) = YEAR(CURRENT_DATE())";
@@ -136,8 +180,8 @@
 					$fetch = $result->fetch_assoc();
 					$data = $fetch;
 				 }
-				 return $data;
-            
+
+			 return $data;
 		}
 
 		//creating dashboard total YEARly income method

@@ -23,24 +23,31 @@
         <?php include '../includes/topbar.php';?>
 
         <!-- including sidebar file -->
-        <?php include '../includes/sidebar.php';
-
-                
-        ?>
+        <?php include '../includes/sidebar.php';?>
             <!-- Dashboard item -->
             <div class="row" id="dashboard">
+                <div class="col-md-12 my-2">
+                <p class="list-group-item bg-info text-white text-center mb-2">Income and Expenditure statistics for the year (,000)</p>
+                    <div class="shadow p-2" style="height:350px;">
+                        <canvas id="chart_js"></canvas>
+                    </div>
+                </div>
+                
                 <!-- first column  -->
                 <div class="col-md-3 my-2">
                    <div class="card shadow bg-primary py-2">
                         <div class="card-title">
                             <?php 
                                 $modal = new Modal;
-                                $total_row = $modal->monthly_inc();
-                            ?>
+                                $total_row = $modal->monthly_inc(); 
+                               
+                                ?>
+                            
+                               
                             <h3 class="text-white text-center">#<?= $total_row['total_report'];?></h3>
                         </div><hr>
                         <div class="card-body">
-                            <h5 class="text-white text-center">Current Month Income</h5>
+                            <h5 class="text-white text-center">Current Month Income </h5>
                         </div>
                    </div>
                 </div>
@@ -53,12 +60,10 @@
                                 $modal = new Modal;
                                 $total_row = $modal->monthly_exp();
                             ?>
+                            
                             <h3 class="text-white text-center">#<?= $total_row['total_report'];?></h3>
                         </div><hr>
-                        <div class="card-body">
-                        <?php
-                       
-                        ?>
+                        <div class="card-body">                        
                             <h5 class="text-white text-center">Current Month Expenditure</h5>
                         </div>
                    </div>
@@ -128,7 +133,9 @@
                            $color = 'danger';
                        }
                        else {
-                           $echo = 'Deficit';
+                           $echo = 'Surplus / Deficit';
+                           // bootstrap color
+                           $color = 'danger';
                        }
 
                     ?>
@@ -271,7 +278,113 @@
             <script src="../js/jquery-3.2.1.min.js"></script>
             <script src="../js/popper.min.js"></script>
             <script src="../js/bootstrap.min.js"></script>
+            <script src="../js/Chart.bundle.min.js"></script>
             <!-- javascript script -->
             <script src="../js/script.js"></script>
+            <script>
+                // chart js section
+const bd_brandProduct3 = 'rgba(0,181,233,0.9)';
+const bd_brandService3 = 'rgba(0,173,95,0.9)';
+const brandProduct3 = 'transparent';
+const brandService3 = 'transparent';
+
+var expenditure_chart = [
+                <?php 
+                      // dynamic fetching of the months' data        
+                    $modal = new Modal;
+                    $cost = $modal->expenditure_chart();
+                    foreach($cost as $costs){?>
+                    // dividing the json monthly value by 1000
+                    <?= json_encode($costs['costs']/1000) . ','; ?>
+                <?php } ?>''
+];
+var income_chart = [
+                <?php 
+                      // dynamic fetching of the months' data        
+                    $modal = new Modal;
+                    $cost = $modal->income_chart();
+                    foreach($cost as $costs){?>
+                    // dividing the json monthly value by 1000
+                    <?= json_encode($costs['costs']/1000) . ','; ?>
+                <?php } ?>''];
+var chart = document.querySelector('#chart_js');
+var myChart = new Chart(chart, {
+    type: 'line',
+    data: {
+      labels: [
+                <?php 
+                      // dynamic fetching of the months' data        
+                    $modal = new Modal;
+                    $month = $modal->month_chart();
+                    foreach($month as $months){?>
+                    <?= json_encode($months['month']) . ','; ?>
+                <?php } ?>''
+            ],
+      datasets: [
+        {
+          label: 'Expenditure',
+          backgroundColor: brandService3,
+          borderColor: bd_brandService3,
+          pointHoverBackgroundColor: '#fff',
+          borderWidth: 0,
+          data: expenditure_chart,
+          pointBackgroundColor: bd_brandService3
+        },
+        {
+          label: 'Income',
+          backgroundColor: brandProduct3,
+          borderColor: bd_brandProduct3,
+          pointHoverBackgroundColor: '#fff',
+          borderWidth: 0,
+          data: income_chart,
+          pointBackgroundColor: bd_brandProduct3
+
+        }
+      ]
+    },
+    options: {
+      maintainAspectRatio: false,
+      legend: {
+        display: true
+      },
+      responsive: true,
+      scales: {
+        xAxes: [{
+          gridLines: {
+            drawOnChartArea: true,
+            color: '#f2f2f2'
+          },
+          ticks: {
+            fontFamily: "Poppins",
+            fontSize: 12
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            maxTicksLimit: 5,
+            stepSize: 50,
+            max: 150,
+            fontFamily: "Poppins",
+            fontSize: 12
+          },
+          gridLines: {
+            display: false,
+            color: '#f2f2f2'
+          }
+        }]
+      },
+      elements: {
+        point: {
+          radius: 3,
+          hoverRadius: 4,
+          hoverBorderWidth: 3,
+          backgroundColor: '#333'
+        }
+      }
+
+    }
+  });
+            </script>
 </body>
 </html>
