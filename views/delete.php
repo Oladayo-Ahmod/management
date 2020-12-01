@@ -1,5 +1,6 @@
-
+       
         <?php
+         include '../modal/modal.php';
         // starting session
         session_start();
         if (strlen($_SESSION['id']) == 0) {
