@@ -124,6 +124,9 @@
                     <label for="post-category">Item category</label>
                     <select class="form-control" name="category" id="" required>
                         <option value="" disabled selected><?= $editing['category'];?></option>
+                        <option value="donation">Donation</option>
+                        <option value="annual due">Annual Due</option>
+                        <option value="subscription">Subscription</option>
                         <option value="lecture">Faculty lecture</option>
                         <option value="depreciation">Depreciation</option>
                         <option value="arrears">Annual due in arrears</option>
