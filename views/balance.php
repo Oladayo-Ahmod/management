@@ -141,6 +141,14 @@
                            // bootstrap color
                            $color = 'danger';
                        }
+                       else if ($income < $expenditure) {
+                        // making the content surplus
+                        $echo = 'Deficit';
+                        // the surplus balance
+                        $balance = $expenditure - $income;
+                        // bootstrap color
+                        $color = 'danger';
+                    }
                        else {
                            $echo = 'Deficit';
                        }
@@ -321,6 +329,12 @@
                             // bootstrap color
                             $color = 'danger';
                         }
+                        else if($payment > $receipt){
+                                // the favorable balance
+                            $balance = $payment - $receipt;
+                            // bootstrap color
+                            $color = 'danger';
+                        }
                         else {
                             // bootstrap color
                             $color = 'danger';
@@ -436,6 +450,14 @@
                            // bootstrap color
                            $color = 'danger';
                        }
+                       else if ($income < $expenditure) {
+                        // making the content surplus
+                        $echo = 'Deficit';
+                        // the surplus balance
+                        $balance = $expenditure - $income;
+                        // bootstrap color
+                        $color = 'danger';
+                    }
                        else {
                            $echo = 'Deficit';
                        }

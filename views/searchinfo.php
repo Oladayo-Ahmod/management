@@ -30,7 +30,17 @@
             <?php include '../includes/topbar.php';?>
            
             <!-- including sidebar file -->
-            <?php include '../includes/sidebar.php';?>
+            <?php include '../includes/sidebar.php';
+
+            if(isset($_POST['searchexp'])){
+                // table name
+                $table_name = 'Expenditure';
+            }
+            if(isset($_POST['searchinc'])){
+                // table name
+                $table_name = 'Income';
+            }
+            ?>
 
             <ol class="breadcrumb">
                 <li class="active text-primary"><i class="fa fa-minus mr-1"></i>/ <?= $table_name;?> Report</li>
