@@ -1,7 +1,13 @@
 <?php
 // starting session
 session_start();
-
+// ini_set('display_errors', '1');
+// ini_set('display_startup_errors', '1');
+// error_reporting(E_ALL);
+include 'modal/modal.php';
+$modal = new Modal;
+$error = $modal->login();
+$modal->login();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,11 +32,14 @@ session_start();
                         <h5 class="list-group-item active text-center">Admin | Login</h5>
                     </div>
                         <!-- error or success message -->
-                            <?php
-                                include 'modal/modal.php';
-                                $modal = new Modal;
-                                $modal->login();
-                            ?>
+                           <?php
+                           if (isset($_POST['login'])) {
+                                if ($error) {
+                                    echo $error['error'];
+                                }
+                            }
+                            
+                           ?>
                         <!-- error or success message ends -->
                         <form action="#" class="form-group p-2" method="POST">
                             <label for="email">Email</label>

@@ -123,20 +123,14 @@
                     <input type="date" class="form-control" name="date" value="<?= $editing['itemdate'];?>" required>
                     <label for="post-category">Item category</label>
                     <select class="form-control" name="category" id="" required>
-                        <option value="" disabled selected><?= $editing['category'];?></option>
-                        <option value="donation">Donation</option>
-                        <option value="annual due">Annual Due</option>
-                        <option value="subscription">Subscription</option>
-                        <option value="lecture">Faculty lecture</option>
-                        <option value="depreciation">Depreciation</option>
-                        <option value="arrears">Annual due in arrears</option>
-                        <option value="excosarrears">Excos due in arrears</option>
-                        <option value="printing">Printing</option>
-                        <option value="transport">Transport</option>
-                        <option value="academics">Academics</option>
-                        <option value="food">Food</option>
-                        <option value="other">Others</option>
-                    </select>							
+                        <option value="" disabled selected>choose category</option>
+                        <?php 
+                            $modal = new Modal;
+                            $fetch = $modal->all_cat();
+                            foreach($fetch as $fetches){?>
+                        <option value=<?= $fetches['category_name'];?> ><?= $fetches['category_name'];?></option>
+                        <?php }?>   
+                    </select>       				
                     <label for="item">Item Place</label>
                     <input type="text" class="form-control" name="place" value="<?= $editing['place'];?>" required>
                     <label for="item">Item Description</label>

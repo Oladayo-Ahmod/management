@@ -1,7 +1,7 @@
 <?php 
      // starting session
      session_start();
-     if (strlen($_SESSION['id']) == 0) {
+     if (strlen($_SESSION['id']) < 1) {
          header('location:../index.php');
      } 
 ?>

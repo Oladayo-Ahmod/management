@@ -16,14 +16,9 @@
        // creating login method
 
 		public function login(){
-			// //caches control
-			// header('Cache-Control:no cache');// no cache
-			// session_cache_limiter('private_no_expire');
-			//starting the session variable
-			// disabling error report
+			$error = "";
 			error_reporting(0);
 			if (isset($_POST['login'])) {
-				$error = "";
 				$email = strip_tags($_POST['email']);
 				$password = strip_tags($_POST['password']);
 				$query = "SELECT * FROM `admin_details` WHERE email = ? LIMIT 1";
@@ -50,8 +45,8 @@
 						$error = '<div class="alert alert-danger">Incorrect Email or Password </div>';
 					}
 				}
-				
-				echo $error;
+				$data['error'] = $error;
+				return $data;
 			}
 		}
 
@@ -452,7 +447,7 @@
 				//getting the number of pages
 				$total_pages  = intval($result_count['id']) / $rpp;
 				$data['total'] = $total_pages;
-				$query = "SELECT * FROM expenditure WHERE item IS NOT NULL ORDER BY itemdate LIMIT $start,$rpp";
+				$query = "SELECT * FROM expenditure WHERE item IS NOT NULL ORDER BY itemdate DESC LIMIT $start,$rpp";
 				$stmt = $this->conn->prepare($query);
 				$stmt->execute();
 				$result = $stmt->get_result();
@@ -607,7 +602,7 @@
 				//getting the number of pages
 				$total_pages  = intval($result_count['id']) / $rpp;
 				$data['total'] = $total_pages;
-				$query = "SELECT * FROM income ORDER BY itemdate LIMIT $start,$rpp";
+				$query = "SELECT * FROM income ORDER BY itemdate DESC LIMIT $start,$rpp";
 				$stmt = $this->conn->prepare($query);
 				$stmt->execute();
 				$result = $stmt->get_result();
@@ -702,6 +697,26 @@
 			// fetching all the categories in the table
 			$data = null;
 			$query = "SELECT * FROM category WHERE category_type='$type' ";
+			$stmt = $this->conn->prepare($query);
+			if($stmt->execute()){
+				$result = $stmt->get_result();
+				if (mysqli_num_rows($result) > 0) {
+					while ($fetch = $result->fetch_assoc()) {
+						$data[] = $fetch;
+					}	
+				}
+				
+			}
+			return $data;
+		}
+
+		// creating fetch method for all categories for the edit file
+		public function all_cat(){
+			//disabling error report
+			error_reporting(0);
+			// fetching all the categories in the table
+			$data = null;
+			$query = "SELECT * FROM category ";
 			$stmt = $this->conn->prepare($query);
 			if($stmt->execute()){
 				$result = $stmt->get_result();

@@ -11,5 +11,5 @@ localhost/mssn/index
 
 #Login details
 
-Email : saduadisa@gmail.com
+Email : oladayoahmod112@gmail.com
 password : olami
