@@ -1,6 +1,13 @@
 <?php
 // starting session
 session_start();
+// check if the user is already logged in
+if ($_SESSION) {
+    if(strlen($_SESSION['id']) > 0){
+        // redirect to the dashboard 
+        header('location:admin/dashboard.php');
+    }    
+}
 // ini_set('display_errors', '1');
 // ini_set('display_startup_errors', '1');
 // error_reporting(E_ALL);
