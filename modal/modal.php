@@ -120,8 +120,10 @@
 		// creating dashboard chart for expenditure of the year method
 		public function expenditure_chart(){
 			$data = null;
-			$query = "SELECT SUM(cost) AS costs FROM expenditure GROUP BY
-			YEAR(itemdate), MONTH(itemdate) ORDER BY YEAR(itemdate),MONTH(itemdate)";
+			$query = "SELECT SUM(cost) AS costs FROM expenditure
+			 WHERE YEAR(itemdate) = YEAR(CURRENT_dATE()) 
+			 GROUP B YEAR(itemdate), MONTH(itemdate)
+			 ORDER BY YEAR(itemdate),MONTH(itemdate)";
 			 $stmt = $this->conn->prepare($query);
 			 $stmt->execute();
 			 $result = $stmt->get_result();
