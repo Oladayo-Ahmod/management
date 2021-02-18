@@ -104,8 +104,10 @@
 		// creating dashboard chart for months of the year method
 		public function month_chart(){
 			$data = null;
-			$query = "SELECT date_format(itemdate,'%M') AS month FROM expenditure GROUP BY
-			YEAR(itemdate), MONTH(itemdate) ORDER BY YEAR(itemdate),MONTH(itemdate)";
+			$query = "SELECT date_format(itemdate,'%M') AS month FROM income
+			WHERE YEAR(itemdate) = YEAR(CURRENT_DATE()) GROUP BY
+			YEAR(itemdate), MONTH(itemdate)
+			ORDER BY YEAR(itemdate),MONTH(itemdate)";
 			 $stmt = $this->conn->prepare($query);
 			 $stmt->execute();
 			 $result = $stmt->get_result();
@@ -133,8 +135,10 @@
 		// creating dashboard chart for income of the year method
 		public function income_chart(){
 			$data = null;
-			$query = "SELECT SUM(cost) AS costs FROM income GROUP BY
-			YEAR(itemdate), MONTH(itemdate) ORDER BY YEAR(itemdate),MONTH(itemdate)";
+			$query = "SELECT SUM(cost) AS costs FROM income
+			 WHERE YEAR(itemdate) = YEAR(CURRENT_dATE())
+			 GROUP BY YEAR(itemdate), MONTH(itemdate)
+			 ORDER BY YEAR(itemdate),MONTH(itemdate)";
 			 $stmt = $this->conn->prepare($query);
 			 $stmt->execute();
 			 $result = $stmt->get_result();
