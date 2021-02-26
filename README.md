@@ -7,9 +7,10 @@ https://unitechdev.com
 
 # Login URL
 
-localhost/mssn/index
+localhost/management/index
 
 #Login details
 
 Email : oladayoahmod112@gmail.com
+
 password : olami
