@@ -1,5 +1,5 @@
-# mssn
-An accounting software for a not for profit making organisation
+# management
+An accounting software for a not for profit making organisation which is mostly suitable for various organisations at the university or various institutions
 
 # Website Url
 
